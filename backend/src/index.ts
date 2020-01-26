@@ -147,8 +147,8 @@ const register = async (browser: puppeteer.Browser, action: Action, crn: string,
     await register.evaluate(() => {
       document.querySelectorAll('.datadisplaytable tbody tr').forEach((node, i) => {
         if (i === 0) return;
-        if (node.querySelector('td:nth-of-type(3)').textContent === '24956')
-          node.querySelector('td:nth-of-type(2) select').selectedIndex = 1;
+        if (node!.querySelector('td:nth-of-type(3)')!.textContent === '24956')
+          (node!.querySelector('td:nth-of-type(2) select')! as any).selectedIndex = 1;
       });
     });
     await register.click('input[value="Submit Changes"]');
@@ -210,9 +210,8 @@ app.ws('/', (ws, req) => {
           matchingClient.send(JSON.stringify({ type: 'trading' }))
           ws.send(JSON.stringify({ type: 'trading' }))
 
-          // TODO: trade
           const browser = await login(username, password);
-          const matchBrowser = browsers.get(match);
+          const matchBrowser = browsers.get(match) as any;
           const matchPin = matchingStatus.advisingPin;
 
           await Promise.all([
@@ -254,7 +253,7 @@ app.ws('/', (ws, req) => {
 
         const matchingClient = clients.get(match);
         if (browsers.has(match)) {
-          await browsers.get(match).close();
+          await browsers.get(match)!.close();
           browsers.delete(match);
         }
 
