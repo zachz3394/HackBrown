@@ -34,7 +34,7 @@ class App extends React.Component {
           this.setState({ trading: true, confirmed: false });
         },
         complete: () => {
-          this.setState({ complete: true });
+          this.setState({ complete: true, trading: false });
         },
         cancel: () => {
           this.setState({ cancel: true, matched: false, trading: false, confirmed: false, complete: false });
@@ -57,8 +57,9 @@ class App extends React.Component {
     this.setState({ confirmed });
   }
 
-  closeDialog = () => {
+  closeDialog = (search) => {
     this.setState({
+      search,
       matched: false,
       trading: false,
       complete: false,

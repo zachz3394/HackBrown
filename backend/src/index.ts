@@ -65,7 +65,7 @@ const elementExists = async (page: puppeteer.Page, selector: string) => {
 }
 
 const login = async (username: string, password: string) => {
-  const browser = await puppeteer.launch(process.env.NODE_ENV === 'production' ? {} : { headless: true, args: ['--disable-gpu'] });
+  const browser = await puppeteer.launch(process.env.NODE_ENV === 'production' ? {} : { headless: false, args: ['--disable-gpu'] });
   const newPagePromise = () => new Promise<puppeteer.Page>(resolve =>
     browser.once('targetcreated', (target: any) =>
       resolve(target.page()))); 
@@ -144,13 +144,13 @@ const register = async (browser: puppeteer.Browser, action: Action, crn: string,
     await register.type('#crn_id1', crn, { delay: 20 });
     await register.click('input[value="Submit Changes"]');
   } else {
-    await register.evaluate(() => {
+    await register.evaluate((crn) => {
       document.querySelectorAll('.datadisplaytable tbody tr').forEach((node, i) => {
         if (i === 0) return;
-        if (node!.querySelector('td:nth-of-type(3)')!.textContent === '24956')
+        if (node!.querySelector('td:nth-of-type(3)')!.textContent === crn)
           (node!.querySelector('td:nth-of-type(2) select')! as any).selectedIndex = 1;
       });
-    });
+    }, crn);
     await register.click('input[value="Submit Changes"]');
   }
   await delay(1000);

@@ -30,7 +30,7 @@ class Confirm extends React.Component {
   clickConfirm = () => {
     if (this.state.promptCreds) {
       this.props.setConfirm(true, this.state.username, this.state.password, this.state.advisingPin);
-      this.props.closeDialog();
+      this.props.closeDialog(false);
     } else {
       this.setState({ promptCreds: true })
     }
@@ -38,7 +38,7 @@ class Confirm extends React.Component {
 
   clickCancel = () => {
     this.props.setConfirm(false);
-    this.props.closeDialog();
+    this.props.closeDialog(false);
   };
 
   onChange = (event) => {
@@ -123,7 +123,7 @@ class Confirm extends React.Component {
             Sorry, the person you matched with decided to cancel. We'll try to find you another match.
 
             <div className={Wrap}>
-              <div className={css(Button, red)} onClick={this.props.closeDialog}> Okay. </div>
+              <div className={css(Button, red)} onClick={() => this.props.closeDialog(true)}> Okay. </div>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@ class Confirm extends React.Component {
             Trade complete! Please check your account to make sure the trade went smoothly.
 
             <div className={Wrap}>
-              <div className={css(Button, green)} onClick={this.props.closeDialog}> Okay! </div>
+              <div className={css(Button, green)} onClick={() => this.props.closeDialog(true)}> Okay! </div>
             </div>
           </div>
         </div>
