@@ -28,8 +28,7 @@ const TradeForm = (props) => {
   const row = css`
     width: 300px;
     display: flex;
-    margin-bottom: 5px;
-    justify-content: space-around;
+    margin-bottom: 10px;
 
     label {
       flex: 1;
