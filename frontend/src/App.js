@@ -118,7 +118,8 @@ class App extends React.Component {
     const Body = css`
       margin-top: 42px;
       font-size: 14px;
-      width: 600px;
+      max-width: 600px;
+      width: 80%;
     `;
     
 
